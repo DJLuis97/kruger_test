@@ -1,4 +1,4 @@
-import { Box, Button, createTheme, ThemeProvider } from "@mui/material";
+import { Box, createTheme, ThemeProvider } from "@mui/material";
 import { useEffect } from "react";
 import Cookies from "universal-cookie";
 import HomeAdmin from "../components/HomeAdmin";
@@ -9,11 +9,6 @@ const mdTheme = createTheme();
 const cookies = new Cookies();
 
 export default function HomePage() {
-	const logout = () => {
-		cookies.remove("username");
-		window.location.href = "/login";
-	};
-
 	useEffect(() => {
 		if (cookies.get("username") === undefined) window.location.href = "/login";
 	}, []);
@@ -24,7 +19,6 @@ export default function HomePage() {
 			<Box sx={{ display: "flex" }}>
 				{cookies.get("username").role === "employee" && <HomeEmployee />}
 				{cookies.get("username").role === "admin" && <HomeAdmin />}
-				<Button onClick={() => logout()}>Cerrar Sesión</Button>
 			</Box>
 		</ThemeProvider>
 	);
