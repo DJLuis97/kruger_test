@@ -1,7 +1,6 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import {
-	AppBar,
 	createTheme,
 	CssBaseline,
 	IconButton,
@@ -12,15 +11,13 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
-	ThemeProvider,
-	Toolbar,
-	Typography
+	ThemeProvider
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link as LinkRouter } from "react-router-dom";
 import Cookies from "universal-cookie";
 import ModalNewEmployee from "../components/ModalNewEmployee";
+import NavBar from "../components/NavBar";
 
 const theme = createTheme();
 const cookies = new Cookies();
@@ -84,21 +81,7 @@ export default function EmployeesPage() {
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<AppBar
-				position="absolute"
-				color="default"
-				elevation={0}
-				sx={{
-					position: "relative",
-					borderBottom: (t) => `1px solid ${t.palette.divider}`
-				}}
-			>
-				<Toolbar>
-					<Typography variant="h6" color="inherit" noWrap>
-						<LinkRouter to="/">Kruger test</LinkRouter>
-					</Typography>
-				</Toolbar>
-			</AppBar>
+			<NavBar />
 			<ModalNewEmployee add={addSingleEmployee} />
 			<TableContainer component={Paper}>
 				<Table sx={{ minWidth: 650 }} aria-label="simple table">

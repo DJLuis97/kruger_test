@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import FormEmployee from "../components/FormEmployee";
+import NavBar from "../components/NavBar";
 
 const mdTheme = createTheme();
 const cookies = new Cookies();
@@ -43,6 +44,7 @@ export default function HomePage() {
 
 	return (
 		<ThemeProvider theme={mdTheme}>
+			<NavBar />
 			<Box sx={{ display: "flex" }}>
 				{user?.role === "employee" && <FormEmployee />}
 				{user?.role === "admin" && <Button href="/employees">Empleados</Button>}
