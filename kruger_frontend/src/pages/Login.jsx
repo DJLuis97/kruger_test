@@ -7,19 +7,46 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
+import md5 from "md5";
+import { useEffect, useState } from "react";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
+const theme = createTheme();
 
 export default function LoginPage() {
-	const theme = createTheme();
+	const [loadLogin, setLoadLogin] = useState(false);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-
-		console.log({
-			email: data.get("email"),
-			password: data.get("password")
-		});
+		setLoadLogin(true);
+		axios
+			.get(`http://localhost:3001/users`, {
+				params: {
+					username: data.get("username"),
+					password: md5(data.get("password"))
+				}
+			})
+			.then((res) => res.data)
+			.then((data) => {
+				if (data.length === 1) {
+					cookies.set("username", data[0], { path: "/" });
+					window.location.href = "/";
+				} else {
+					alert("Datos incorrectos");
+				}
+			})
+			.catch((err) => console.log(err))
+			.finally(() => setLoadLogin(false));
 	};
+
+	useEffect(() => {
+		if (cookies.get("username") !== undefined) {
+			window.location.href = "/";
+		}
+	}, []);
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -59,7 +86,7 @@ export default function LoginPage() {
 							id="password"
 							autoComplete="current-password"
 						/>
-						<Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+						<Button disabled={loadLogin} type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
 							Iniciar sesión
 						</Button>
 					</Box>
