@@ -21,15 +21,21 @@ export default function HomePage() {
 		if (cookies.get("username") === undefined) {
 			window.location.href = "/login";
 		} else {
-			setLoadHomePage(true);
 			setUser(cookies.get("username"));
-			axios
-				.get(`http://localhost:3001/employees?user_id=${cookies.get("username").id}`)
-				.then((res) => console.log(res.data))
-				.catch((err) => {
-					alert("Algo ocurrio al obtener los datos del empleado logueado");
-				})
-				.finally(() => setLoadHomePage(false));
+			if (cookies.get("username").role === "employee") {
+				setLoadHomePage(true);
+				axios
+					.get(`http://localhost:3001/employees?user_id=${cookies.get("username").id}`)
+					.then((res) => {
+						if (res.data.length === 1) {
+							setEmployee(res.data[0]);
+						}
+					})
+					.catch((err) => {
+						alert("Algo ocurrio al obtener los datos del empleado logueado");
+					})
+					.finally(() => setLoadHomePage(false));
+			}
 		}
 	}, []);
 
