@@ -2,9 +2,15 @@
 	"users": [
 		{
 			"id": 1,
-			"username": "luis",
+			"username": "admin",
 			"password": "5f4dcc3b5aa765d61d8327deb882cf99",
 			"role": "admin"
+		},
+		{
+			"id": 2,
+			"username": "luis",
+			"password": "5f4dcc3b5aa765d61d8327deb882cf99",
+			"role": "employee"
 		}
 	],
 	"employees": [
@@ -21,7 +27,7 @@
 			"vaccinated_type": "Sputnik",
 			"vaccinated_date": "2020-01-01",
 			"vaccinated_dose": 2,
-			"user_id": 1
+			"user_id": 2
 		}
 	]
 }
