@@ -14,7 +14,7 @@ const style = {
 	p: 2
 };
 
-const ModalNewEmployee = () => {
+const ModalNewEmployee = ({ add }) => {
 	const [open, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
@@ -34,6 +34,7 @@ const ModalNewEmployee = () => {
 			.then((res) => {
 				if (res.status === 201) {
 					alert("Empleado creado con existo");
+					add(res.data);
 				} else {
 					console.log(res);
 				}

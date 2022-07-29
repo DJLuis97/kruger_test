@@ -28,6 +28,8 @@ export default function EmployeesPage() {
 	const [employees, setEmployees] = useState([]);
 	const [loadEmployeesPage, setLoadEmployeesPage] = useState(false);
 
+	const addSingleEmployee = (employee) => setEmployees((prevState) => [...prevState, employee]);
+
 	useEffect(() => {
 		if (cookies.get("username") === undefined) {
 			window.location.href = "/login";
@@ -67,7 +69,7 @@ export default function EmployeesPage() {
 					</Typography>
 				</Toolbar>
 			</AppBar>
-			<ModalNewEmployee />
+			<ModalNewEmployee add={addSingleEmployee} />
 			<TableContainer component={Paper}>
 				<Table sx={{ minWidth: 650 }} aria-label="simple table">
 					<TableHead>
