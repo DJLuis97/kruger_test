@@ -28,7 +28,8 @@ const ModalNewEmployee = ({ add }) => {
 		axios
 			.post(`http://localhost:3001/users`, {
 				username: data.get("ci"),
-				password: md5(data.get("ci"))
+				password: md5(data.get("ci")),
+				role: "employee"
 			})
 			.then((res) => {
 				if (res.status === 201) {
