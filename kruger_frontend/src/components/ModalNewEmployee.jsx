@@ -1,5 +1,6 @@
 import { Box, Button, Container, Grid, Modal, Paper, TextField, Typography } from "@mui/material";
 import axios from "axios";
+import md5 from "md5";
 import { useState } from "react";
 
 const style = {
@@ -25,24 +26,39 @@ const ModalNewEmployee = ({ add }) => {
 		const data = new FormData(event.currentTarget);
 		setLoadSubmit(true);
 		axios
-			.post(`http://localhost:3001/employees`, {
-				ci: data.get("ci"),
-				name: data.get("name"),
-				last_name: data.get("last_name"),
-				email: data.get("email")
+			.post(`http://localhost:3001/users`, {
+				username: data.get("ci"),
+				password: md5(data.get("ci"))
 			})
 			.then((res) => {
 				if (res.status === 201) {
-					alert("Empleado creado con existo");
-					add(res.data);
+					axios
+						.post(`http://localhost:3001/employees`, {
+							ci: data.get("ci"),
+							name: data.get("name"),
+							last_name: data.get("last_name"),
+							email: data.get("email"),
+							user_id: res.data.id
+						})
+						.then((res) => {
+							if (res.status === 201) {
+								alert("Empleado creado con existo");
+								add(res.data);
+							} else {
+								console.log(res);
+							}
+						})
+						.catch((err) => {
+							alert("ALgo malo paso al guardar el empleado");
+						})
+						.finally(() => setLoadSubmit(false));
 				} else {
 					console.log(res);
 				}
 			})
 			.catch((err) => {
-				alert("ALgo malo paso al guardar el empleado");
-			})
-			.finally(() => setLoadSubmit(false));
+				alert("ALgo malo paso al crear el usuario");
+			});
 	};
 
 	if (loadSubmit) return <div>Cargando...</div>;
