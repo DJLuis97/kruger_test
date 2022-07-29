@@ -14,6 +14,11 @@ const FormEmployee = ({ employee }) => {
 	const [isVaccined, setIsVaccined] = useState(false);
 	const [loadUpdateEmployee, setLoadUpdateEmployee] = useState(false);
 
+	const clearFormVaccine = () => {
+		setVaccineType("");
+		setIsVaccined(false);
+	};
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		setLoadUpdateEmployee(true);
@@ -31,6 +36,7 @@ const FormEmployee = ({ employee }) => {
 			.then((res) => {
 				if (res.status === 200) {
 					alert("Datos actualizado con éxito");
+					clearFormVaccine();
 				} else {
 					console.log(res);
 				}
