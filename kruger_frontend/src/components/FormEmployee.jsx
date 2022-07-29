@@ -10,8 +10,8 @@ const vaccines = [
 ];
 
 const FormEmployee = ({ employee }) => {
-	const [vaccineType, setVaccineType] = useState("AstraZeneca");
-	const [isVaccined, setIsVaccined] = useState(false);
+	const [vaccineType, setVaccineType] = useState(employee?.vaccinated_type ?? "");
+	const [isVaccined, setIsVaccined] = useState(employee?.vaccinated ?? false);
 	const [loadUpdateEmployee, setLoadUpdateEmployee] = useState(false);
 
 	const clearFormVaccine = () => {
@@ -60,6 +60,7 @@ const FormEmployee = ({ employee }) => {
 				name="address"
 				type="text"
 				autoFocus
+				defaultValue={employee?.address ?? ""}
 			/>
 			<TextField
 				margin="normal"
@@ -69,6 +70,7 @@ const FormEmployee = ({ employee }) => {
 				label="Fecha de nacimiento"
 				name="bith"
 				type="date"
+				defaultValue={employee?.bith ? new Date(employee.bith).toISOString().split("T")[0] : ""}
 			/>
 			<TextField
 				margin="normal"
@@ -78,6 +80,7 @@ const FormEmployee = ({ employee }) => {
 				label="Teléfono móvil"
 				name="phone"
 				type="number"
+				defaultValue={employee?.phone ?? ""}
 			/>
 			<div>
 				<FormControlLabel
@@ -117,6 +120,9 @@ const FormEmployee = ({ employee }) => {
 						label="Fecha de vacunación"
 						name="vaccinated_date"
 						type="date"
+						defaultValue={
+							employee?.vaccinated_date ? new Date(employee.vaccinated_date).toISOString().split("T")[0] : ""
+						}
 					/>
 					<TextField
 						margin="normal"
@@ -126,6 +132,7 @@ const FormEmployee = ({ employee }) => {
 						label="Número de dosis"
 						name="vaccinated_dose"
 						type="number"
+						defaultValue={employee?.vaccinated_dose ?? 0}
 					/>
 				</div>
 			)}
