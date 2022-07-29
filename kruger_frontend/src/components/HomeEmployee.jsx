@@ -33,22 +33,10 @@ const HomeEmployee = () => {
 	return (
 		<Container maxWidth="lg">
 			<main>
-				<Grid container spacing={2}>
-					<Grid item xs={6}>
-						<Typography>Nombres: {employee?.name}</Typography>
-						<Typography>Apellidos: {employee?.last_name}</Typography>
-						<Typography>Cédula: {employee?.ci}</Typography>
-						<Typography>Correo: {employee?.email}</Typography>
-					</Grid>
-					{employee?.vaccinated && (
-						<Grid item xs={6}>
-							<Typography>Vacunado: {employee?.vaccinated}</Typography>
-							<Typography>Tipo de vacuna: {employee?.vaccinated_type}</Typography>
-							<Typography>Fecha vacunación: {employee?.vaccinated_date}</Typography>
-							<Typography>Número de dosis de la vacuna: {employee?.vaccinated_dose}</Typography>
-						</Grid>
-					)}
-				</Grid>
+				<Typography>Nombres: {employee?.name}</Typography>
+				<Typography>Apellidos: {employee?.last_name}</Typography>
+				<Typography>Cédula: {employee?.ci}</Typography>
+				<Typography>Correo: {employee?.email}</Typography>
 				<FormEmployee employee={employee} />
 			</main>
 		</Container>
