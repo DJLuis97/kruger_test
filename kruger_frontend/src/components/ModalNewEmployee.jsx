@@ -1,4 +1,5 @@
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Modal, Paper, TextField, Typography } from "@mui/material";
+import axios from "axios";
 import { useState } from "react";
 
 const style = {
@@ -6,17 +7,44 @@ const style = {
 	top: "50%",
 	left: "50%",
 	transform: "translate(-50%, -50%)",
-	width: 400,
+	width: 500,
 	bgcolor: "background.paper",
 	border: "2px solid #000",
 	boxShadow: 24,
-	p: 4
+	p: 2
 };
 
 const ModalNewEmployee = () => {
 	const [open, setOpen] = useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
+	const [loadSubmit, setLoadSubmit] = useState(false);
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		const data = new FormData(event.currentTarget);
+		setLoadSubmit(true);
+		axios
+			.post(`http://localhost:3001/employees`, {
+				ci: data.get("ci"),
+				name: data.get("name"),
+				last_name: data.get("last_name"),
+				email: data.get("email")
+			})
+			.then((res) => {
+				if (res.status === 201) {
+					alert("Empleado creado con existo");
+				} else {
+					console.log(res);
+				}
+			})
+			.catch((err) => {
+				alert("ALgo malo paso al guardar el empleado");
+			})
+			.finally(() => setLoadSubmit(false));
+	};
+
+	if (loadSubmit) return <div>Cargando...</div>;
 
 	return (
 		<>
@@ -27,13 +55,57 @@ const ModalNewEmployee = () => {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box sx={style}>
-					<Typography id="modal-modal-title" variant="h6" component="h2">
-						Text in a modal
+				<Box sx={style} component="form" onSubmit={handleSubmit} noValidate>
+					<Typography component="h1" variant="h4" align="center">
+						Agrega un empleado
 					</Typography>
-					<Typography id="modal-modal-description" sx={{ mt: 2 }}>
-						Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-					</Typography>
+					<Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+						<Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+							<Grid container spacing={3}>
+								<Grid item xs={12} sm={6}>
+									<TextField
+										required
+										id="name"
+										name="name"
+										label="Nombres"
+										fullWidth
+										autoComplete="given-name"
+										variant="standard"
+									/>
+								</Grid>
+								<Grid item xs={12} sm={6}>
+									<TextField
+										required
+										id="last_name"
+										name="last_name"
+										label="Apellidos"
+										fullWidth
+										autoComplete="family-name"
+										variant="standard"
+									/>
+								</Grid>
+								<Grid item xs={12}>
+									<TextField required id="ci" name="ci" label="Cédula" fullWidth variant="standard" />
+								</Grid>
+								<Grid item xs={12}>
+									<TextField
+										id="email"
+										name="email"
+										label="Correo"
+										fullWidth
+										type="email"
+										autoComplete="shipping address-line2"
+										variant="standard"
+									/>
+								</Grid>
+							</Grid>
+							<Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+								<Button type="submit" variant="contained" sx={{ mt: 3, ml: 1 }}>
+									Guardar
+								</Button>
+							</Box>
+						</Paper>
+					</Container>
 				</Box>
 			</Modal>
 		</>
