@@ -1,7 +1,10 @@
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import {
 	AppBar,
 	createTheme,
 	CssBaseline,
+	IconButton,
 	Paper,
 	Table,
 	TableBody,
@@ -16,6 +19,7 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
+import ModalNewEmployee from "../components/ModalNewEmployee";
 
 const theme = createTheme();
 const cookies = new Cookies();
@@ -63,6 +67,7 @@ export default function EmployeesPage() {
 					</Typography>
 				</Toolbar>
 			</AppBar>
+			<ModalNewEmployee />
 			<TableContainer component={Paper}>
 				<Table sx={{ minWidth: 650 }} aria-label="simple table">
 					<TableHead>
@@ -71,6 +76,8 @@ export default function EmployeesPage() {
 							<TableCell align="right">Cédula</TableCell>
 							<TableCell align="right">Nombres</TableCell>
 							<TableCell align="right">Apellidos</TableCell>
+							<TableCell align="right"></TableCell>
+							<TableCell align="right"></TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -82,6 +89,16 @@ export default function EmployeesPage() {
 								<TableCell align="right">{employee.ci}</TableCell>
 								<TableCell align="right">{employee.name}</TableCell>
 								<TableCell align="right">{employee.last_name}</TableCell>
+								<TableCell align="right">
+									<IconButton component="label">
+										<EditIcon />
+									</IconButton>
+								</TableCell>
+								<TableCell align="right">
+									<IconButton component="label">
+										<DeleteIcon />
+									</IconButton>
+								</TableCell>
 							</TableRow>
 						))}
 					</TableBody>
