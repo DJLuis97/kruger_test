@@ -1,19 +1,14 @@
-import { Box, Container, createTheme, CssBaseline, Grid, ThemeProvider, Typography } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import FormEmployee from "./FormEmployee";
 
 const cookies = new Cookies();
-const theme = createTheme();
 
 const HomeEmployee = () => {
 	const [employee, setEmployee] = useState(null);
 	const [loadPage, setLoadPage] = useState(false);
-
-	const handleSubmit = (event) => {
-		event.preventDefault();
-	};
 
 	useEffect(() => {
 		const fetchEmployee = () => {
