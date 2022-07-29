@@ -24,7 +24,7 @@ export default function HomePage() {
 			setLoadHomePage(true);
 			setUser(cookies.get("username"));
 			axios
-				.get(`http://localhost:3001/employees?user_id=${user?.id}`)
+				.get(`http://localhost:3001/employees?user_id=${cookies.get("username").id}`)
 				.then((res) => console.log(res.data))
 				.catch((err) => {
 					alert("Algo ocurrio al obtener los datos del empleado logueado");
