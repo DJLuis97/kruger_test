@@ -9,7 +9,7 @@ const vaccines = [
 	{ id: 4, name: "Jhonson&Jhonson" }
 ];
 
-const FormEmployee = ({ employee }) => {
+const FormEmployee = ({ employee, update }) => {
 	const [vaccineType, setVaccineType] = useState(employee?.vaccinated_type ?? "");
 	const [isVaccined, setIsVaccined] = useState(employee?.vaccinated ?? false);
 	const [loadUpdateEmployee, setLoadUpdateEmployee] = useState(false);
@@ -37,6 +37,7 @@ const FormEmployee = ({ employee }) => {
 				if (res.status === 200) {
 					alert("Datos actualizado con éxito");
 					clearFormVaccine();
+					update(res.data);
 				} else {
 					console.log(res);
 				}

@@ -10,6 +10,10 @@ const HomeEmployee = () => {
 	const [employee, setEmployee] = useState(null);
 	const [loadPage, setLoadPage] = useState(false);
 
+	const updateEmployeeState = (employee) => {
+		setEmployee(employee);
+	};
+
 	useEffect(() => {
 		const fetchEmployee = () => {
 			setLoadPage(true);
@@ -37,7 +41,7 @@ const HomeEmployee = () => {
 				<Typography>Apellidos: {employee?.last_name}</Typography>
 				<Typography>Cédula: {employee?.ci}</Typography>
 				<Typography>Correo: {employee?.email}</Typography>
-				<FormEmployee employee={employee} />
+				<FormEmployee employee={employee} update={updateEmployeeState} />
 			</main>
 		</Container>
 	);
