@@ -30,6 +30,28 @@ export default function EmployeesPage() {
 
 	const addSingleEmployee = (employee) => setEmployees((prevState) => [...prevState, employee]);
 
+	const deleteEmployee = (employee) => {
+		setLoadEmployeesPage(true);
+		axios
+			.delete(`http://localhost:3001/users/${employee.user_id}`)
+			.then((res) => {
+				setLoadEmployeesPage(true);
+				axios
+					.delete(`http://localhost:3001/employees/${employee.id}`)
+					.then((res) => {
+						alert("Empleado eliminado con éxito");
+					})
+					.catch((err) => {
+						alert("Algo paso al eliminar el empleado");
+					})
+					.finally(() => setLoadEmployeesPage(false));
+			})
+			.catch((err) => {
+				alert("ALgo paso al eliminar el usuario");
+			})
+			.finally(() => setLoadEmployeesPage(false));
+	};
+
 	useEffect(() => {
 		if (cookies.get("username") === undefined) {
 			window.location.href = "/login";
@@ -97,7 +119,7 @@ export default function EmployeesPage() {
 									</IconButton>
 								</TableCell>
 								<TableCell align="right">
-									<IconButton component="label">
+									<IconButton onClick={() => deleteEmployee(employee)} component="label">
 										<DeleteIcon />
 									</IconButton>
 								</TableCell>
