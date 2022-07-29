@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link as LinkRouter } from "react-router-dom";
 import Cookies from "universal-cookie";
 import ModalNewEmployee from "../components/ModalNewEmployee";
 
@@ -94,7 +95,7 @@ export default function EmployeesPage() {
 			>
 				<Toolbar>
 					<Typography variant="h6" color="inherit" noWrap>
-						Kruger test
+						<LinkRouter to="/">Kruger test</LinkRouter>
 					</Typography>
 				</Toolbar>
 			</AppBar>
@@ -112,26 +113,32 @@ export default function EmployeesPage() {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{employees.map((employee) => (
-							<TableRow key={employee.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-								<TableCell component="th" scope="row">
-									{employee.id}
-								</TableCell>
-								<TableCell align="right">{employee.ci}</TableCell>
-								<TableCell align="right">{employee.name}</TableCell>
-								<TableCell align="right">{employee.last_name}</TableCell>
-								<TableCell align="right">
-									<IconButton component="label">
-										<EditIcon />
-									</IconButton>
-								</TableCell>
-								<TableCell align="right">
-									<IconButton onClick={() => deleteEmployee(employee)} component="label">
-										<DeleteIcon />
-									</IconButton>
-								</TableCell>
+						{employees.length <= 0 ? (
+							<TableRow>
+								<TableCell component="th">No existen registros</TableCell>
 							</TableRow>
-						))}
+						) : (
+							employees.map((employee) => (
+								<TableRow key={employee.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+									<TableCell component="th" scope="row">
+										{employee.id}
+									</TableCell>
+									<TableCell align="right">{employee.ci}</TableCell>
+									<TableCell align="right">{employee.name}</TableCell>
+									<TableCell align="right">{employee.last_name}</TableCell>
+									<TableCell align="right">
+										<IconButton component="label">
+											<EditIcon />
+										</IconButton>
+									</TableCell>
+									<TableCell align="right">
+										<IconButton onClick={() => deleteEmployee(employee)} component="label">
+											<DeleteIcon />
+										</IconButton>
+									</TableCell>
+								</TableRow>
+							))
+						)}
 					</TableBody>
 				</Table>
 			</TableContainer>
