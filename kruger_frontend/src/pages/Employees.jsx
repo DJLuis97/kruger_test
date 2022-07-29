@@ -30,6 +30,12 @@ export default function EmployeesPage() {
 
 	const addSingleEmployee = (employee) => setEmployees((prevState) => [...prevState, employee]);
 
+	const deleteSingleEmployee = (employee) => {
+		const employees_tmp = employees;
+		const result = employees_tmp.filter((item) => employee.id !== item.id);
+		setEmployees(result);
+	};
+
 	const deleteEmployee = (employee) => {
 		setLoadEmployeesPage(true);
 		axios
@@ -39,6 +45,7 @@ export default function EmployeesPage() {
 				axios
 					.delete(`http://localhost:3001/employees/${employee.id}`)
 					.then((res) => {
+						deleteSingleEmployee(employee);
 						alert("Empleado eliminado con éxito");
 					})
 					.catch((err) => {
