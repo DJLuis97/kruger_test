@@ -1,3 +1,0 @@
-# Backend
-
-[Principal](../README.md)
